@@ -37,4 +37,95 @@ if __name__ == "__main__":
     apotek.tambah_obat(obat2, 50)
     
     apotek.beli_obat("Paracetamol", 20)
+class Medicine:
+    def __init__(self, name, price, quantity, category):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.category = category
+
+class Pharmacy:
+    def __init__(self):
+        self.medicines = []
+
+    def add_medicine(self, name, price, quantity, category):
+        for med in self.medicines:
+            if med.name == name and med.category == category:
+                med.quantity += quantity
+                return
+        new_medicine = Medicine(name, price, quantity, category)
+        self.medicines.append(new_medicine)
+
+    def display_medicines(self):
+        if not self.medicines:
+            print("No medicines available.")
+            return
+        print("Available medicines:")
+        for med in self.medicines:
+            print(f"Category: {med.category}, Name: {med.name}, Price: {med.price}, Quantity: {med.quantity}")
+
+    def search_medicine_by_name(self, name):
+        found_medicines = [med for med in self.medicines if name.lower() in med.name.lower()]
+        if not found_medicines:
+            print(f"No medicines found with the name containing '{name}'.")
+            return
+        print(f"Medicines found with name containing '{name}':")
+        for med in found_medicines:
+            print(f"Category: {med.category}, Name: {med.name}, Price: {med.price}, Quantity: {med.quantity}")
+
+    def sell_medicine(self, name, quantity, category):
+        for med in self.medicines:
+            if med.name == name and med.category == category:
+                if med.quantity >= quantity:
+                    med.quantity -= quantity
+                    print(f"Sold {quantity} of {name} from category {category}.")
+                    return
+                else:
+                    print(f"Not enough {name} in stock. Available quantity: {med.quantity}.")
+                    return
+        print(f"{name} not found in category {category}.")
+
+def main():
+    pharmacy = Pharmacy()
+
+    while True:
+        print("\nPharmacy Management System")
+        print("1. Add Medicine")
+        print("2. Display All Medicines")
+        print("3. Search Medicine by Name")
+        print("4. Sell Medicine")
+        print("5. Exit")
+        
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            name = input("Enter medicine name: ")
+            price = float(input("Enter medicine price: "))
+            quantity = int(input("Enter medicine quantity: "))
+            category = input("Enter medicine category: ")
+            pharmacy.add_medicine(name, price, quantity, category)
+            print(f"Added {quantity} of {name} to inventory in category {category}.")
+
+        elif choice == '2':
+            pharmacy.display_medicines()
+
+        elif choice == '3':
+            name = input("Enter the name or part of the name of the medicine to search: ") 
+            pharmacy.search_medicine_by_name(name)
+
+        elif choice == '4':
+            name = input("Enter medicine name to sell: ")
+            quantity = int(input("Enter quantity to sell: "))
+            category = input("Enter medicine category: ")
+            pharmacy.sell_medicine(name, quantity, category)
+
+        elif choice == '5':
+            print("Exiting the system. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
 

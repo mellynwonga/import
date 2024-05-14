@@ -1,0 +1,40 @@
+class Obat:
+    def __init__(self, nama, jumlah, harga):
+        self.nama = nama
+        self.jumlah = jumlah
+        self.harga = harga
+
+class Apotek:
+    def __init__(self):
+        self.persediaan = {}
+
+    def tambah_obat(self, obat, jumlah):
+        if obat.nama in self.persediaan:
+            self.persediaan[obat.nama].jumlah += jumlah
+        else:
+            self.persediaan[obat.nama] = obat
+
+    def beli_obat(self, nama_obat, jumlah):
+        if nama_obat in self.persediaan:
+            if self.persediaan[nama_obat].jumlah >= jumlah:
+                self.persediaan[nama_obat].jumlah -= jumlah
+                return True
+            else:
+                print("Maaf, stok obat tidak mencukupi.")
+                return False
+        else:
+            print("Maaf, obat tidak tersedia.")
+            return False
+
+# Contoh penggunaan
+if __name__ == "__main__":
+    apotek = Apotek()
+    
+    obat1 = Obat("Paracetamol", 100, 5000)
+    obat2 = Obat("Amoxicillin", 50, 10000)
+    
+    apotek.tambah_obat(obat1, 100)
+    apotek.tambah_obat(obat2, 50)
+    
+    apotek.beli_obat("Paracetamol", 20)
+

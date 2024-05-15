@@ -129,3 +129,51 @@ def main():
 if __name__ == "__main__":
     main()
 
+class Obat:
+    def __init__(self, nama, dosis, frekuensi):
+        self.nama = nama
+        self.dosis = dosis
+        self.frekuensi = frekuensi
+
+    def info(self):
+        return f"Obat: {self.nama}, Dosis: {self.dosis}, Frekuensi: {self.frekuensi}"
+
+def tambah_obat():
+    nama = input("Masukkan nama obat: ")
+    dosis = input("Masukkan dosis obat: ")
+    frekuensi = input("Masukkan frekuensi penggunaan obat: ")
+    return Obat(nama, dosis, frekuensi)
+
+def main():
+    daftar_obat = []
+
+    while True:
+        print("\nPilih tindakan:")
+        print("1. Tambah obat")
+        print("2. Lihat daftar obat")
+        print("3. Keluar")
+
+        pilihan = input("Masukkan nomor tindakan: ")
+
+        if pilihan == '1':
+            obat_baru = tambah_obat()
+            daftar_obat.append(obat_baru)
+            print("Obat berhasil ditambahkan!")
+
+        elif pilihan == '2':
+            if not daftar_obat:
+                print("Belum ada obat yang ditambahkan.")
+            else:
+                print("Daftar Obat:")
+                for obat in daftar_obat:
+                    print(obat.info())
+
+        elif pilihan == '3':
+            print("Program selesai.")
+            break
+
+        else:
+            print("Masukkan tidak valid. Silakan pilih nomor tindakan yang benar.")
+
+if __name__ == "__main__":
+    main()
